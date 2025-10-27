@@ -30,9 +30,16 @@ public class Application {
      */
     public static String[] inputCarNames(String input) {
         String[] carNames = input.split(",");
+        if (carNames.length < 1) {
+            throw new IllegalArgumentException("자동차 이름을 한 개 이상 입력해야 합니다.");
+        }
+
         for (String name : carNames) {
             if (name.length() > 5) {
-                throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
+                throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다. : " + name);
+            }
+            if (name.trim().isEmpty()) {
+                throw new IllegalArgumentException("자동차 이름은 비어 있을 수 없습니다.");
             }
         }
         return carNames;
@@ -50,7 +57,7 @@ public class Application {
             }
             return tryCount;
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("숫자만 입력 가능합니다.");
+            throw new IllegalArgumentException("시도 횟수는 숫자만 입력 가능합니다.");
         }
     }
 
