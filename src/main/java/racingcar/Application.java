@@ -2,6 +2,9 @@ package racingcar;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Application {
 
     public static void main(String[] args) {
@@ -14,9 +17,12 @@ public class Application {
         System.out.println("시도할 횟수는 몇 회인가요?");
         int tryCount = inputTryCount();
 
-        // 출력: 정상적으로 입력받았는지 확인
-        System.out.println("자동차 이름: " + String.join(", ", carNames));
-        System.out.println("시도 횟수: " + tryCount);
+        // RacingGame 인스턴스를 생성하고 게임 시작
+        RacingGame racingGame = new RacingGame(createCars(carNames), tryCount);
+        racingGame.startRace();
+
+        // 최종 우승자 출력
+        System.out.println("최종 우승자 : " + racingGame.findWinners());
     }
 
     /**
@@ -46,5 +52,14 @@ public class Application {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("숫자만 입력 가능합니다.");
         }
+    }
+
+    // Car 객체를 생성하는 메서드
+    public static List<Car> createCars(String[] carNames) {
+        List<Car> cars = new ArrayList<>();
+        for (String carName : carNames) {
+            cars.add(new Car(carName));
+        }
+        return cars;
     }
 }
